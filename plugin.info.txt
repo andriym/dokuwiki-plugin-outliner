@@ -1,7 +1,7 @@
 base   outliner
 author Vincent Voisin 
 email  
-date   2021-06-21
+date   2021-06-24
 name   Outliner Plugin
 desc   Allows collapsible outline layout
 url    http://www.dokuwiki.org/plugin:outliner
