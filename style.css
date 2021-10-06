@@ -11,6 +11,7 @@ dl.outliner dt {
   font-weight: bold;
   background-color: __background_alt__;
   border: 1px solid __border__;
+  border-radius: 4px;
 }
 
 dl.outliner-js dt {
