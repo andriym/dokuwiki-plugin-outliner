@@ -1,6 +1,6 @@
 base   outliner
-author Michael Hamann
-email  michael@content-space.de
+author Vincent Voisin 
+email  
 date   2021-10-06
 name   Outliner Plugin
 desc   Allows collapsible outline layout
