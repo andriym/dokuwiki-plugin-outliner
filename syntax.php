@@ -103,9 +103,9 @@ class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin
     /**
      * Create output
      */
-    public function render($mode, Doku_Renderer $renderer, $data)
+    public function render($format, Doku_Renderer $renderer, $data)
     {
-      if ($mode == 'xhtml') {
+      if ($format == 'xhtml') {
           $state = $data[0];
           switch ($state) {
           case DOKU_LEXER_ENTER:
