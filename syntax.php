@@ -6,10 +6,6 @@
  * @author     Michael Hamann <michael [at] content-space [dot] de>, Pavel Vitis <pavel [dot] vitis [at] seznam [dot] cz>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_PLUGIN.'syntax.php');
-
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
