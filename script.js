@@ -93,4 +93,8 @@ jQuery(function () {
             setState(this, 'closed','action');
         });
 
+    $outliner_dls.find('li.active').parents('dl').each(function() {
+        setState(this, 'open', 'action');
+    });
+
 });
