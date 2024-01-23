@@ -6,54 +6,58 @@
  * @author     Michael Hamann <michael [at] content-space [dot] de>, Pavel Vitis <pavel [dot] vitis [at] seznam [dot] cz>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_PLUGIN.'syntax.php');
-
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin
+{
     /**
      * What kind of syntax are we?
      */
-    function getType(){
+    public function getType()
+    {
         return 'container';
     }
 
-    function getAllowedTypes() {
+    public function getAllowedTypes()
+    {
         return array('container', 'baseonly', 'formatting', 'substition', 'protected', 'disabled', 'paragraphs');
     }
 
     /* Accept own mode so nesting is allowed */
-    function accepts($mode) {
+    public function accepts($mode)
+    {
       if ($mode == substr(get_class($this), 7)) return true;
       return parent::accepts($mode);
     }
 
-    function getPType(){
+    public function getPType()
+    {
         return 'block';
     }
 
     /**
      * Where to sort in?
      */
-    function getSort(){
+    public function getSort()
+    {
         return 10;
     }
 
     /**
      * Connect pattern to lexer
      */
-    function connectTo($mode) {
+    public function connectTo($mode)
+    {
         $this->Lexer->addEntryPattern(
             '\n\s*-->[^\n]*(?=.*?\n\s*<--[^\n]*)',
             $mode,
             'plugin_outliner');
     }
 
-    function postConnect() {
+    public function postConnect()
+    {
         $this->Lexer->addExitPattern(
             '\n\s*<--[^\n]*',
             'plugin_outliner');
@@ -62,7 +66,8 @@ class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, Doku_Handler $handler){
+    public function handle($match, $state, $pos, Doku_Handler $handler)
+    {
         global $ID;
 
         switch ($state) {
@@ -78,7 +83,7 @@ class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin {
             $nopopup = (strpos($matches[2], '#') !== false);
 			// Test if '$ - link flag is present
             $link = (strpos($matches[2], '@') !== false);
-            return array($state, $title, $outline_id, $opened, $nopopup,$link);
+            return array($state, $title, $outline_id, $opened, $nopopup, $link);
 
         case DOKU_LEXER_EXIT:
             return array($state);
@@ -94,12 +99,13 @@ class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($mode, Doku_Renderer $renderer, $data) {
-      if ($mode == 'xhtml') {
+    public function render($format, Doku_Renderer $renderer, $data)
+    {
+      if ($format == 'xhtml') {
           $state = $data[0];
           switch ($state) {
           case DOKU_LEXER_ENTER:
-              list($state, $title, $outline_id, $opened, $nopopup,$link) = $data;
+              list($state, $title, $outline_id, $opened, $nopopup, $link) = $data;
               $renderer->doc .= '<dl class="outliner';
               // only set node id when cookies are used
               if ($this->getConf('useLocalStorage'))
@@ -107,10 +113,9 @@ class syntax_plugin_outliner extends DokuWiki_Syntax_Plugin {
               if ($opened) $renderer->doc .= ' outliner-open';
               if ($nopopup) $renderer->doc .= ' outliner-nopopup';
 			  if ($link) {
-				  $charToReplace=array("[","]");
-				  $linkId=str_replace($charToReplace ,"",$title);
-				  $linkId=explode('|',$linkId);
-				 
+				  $charToReplace = array("[","]");
+				  $linkId = str_replace($charToReplace, "", $title);
+				  $linkId = explode('|', $linkId);				 
 				  $renderer->doc .= '"><dt>'.html_wikilink($linkId[0],$linkId[1])."</dt><dd>\n";
 			  } else{
 				  $renderer->doc .= '"><dt>'.hsc($title)."</dt><dd>\n";
