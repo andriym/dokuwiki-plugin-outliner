@@ -8,7 +8,7 @@ dl.outliner {
 dl.outliner dt {
   margin: 0.5em 0;
   padding: 0.3em 1em;
-  font-weight: bold;
+  font-weight: normal;
   background-color: __background_alt__;
   border: 1px solid __border__;
   border-radius: 4px;
